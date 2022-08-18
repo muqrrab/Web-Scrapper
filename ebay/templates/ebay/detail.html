@@ -1,0 +1,82 @@
+    
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+        <style>
+            .font{
+                font-weight: bold;
+            }
+        </style>
+        <title>Web Scraping</title>
+
+    </head>
+    <body>
+
+
+        <div class="container text-center mt-2">
+            <h2>Ebay Products Scrapping</h2>
+        </div>
+
+      <form action="{% url 'scrape:index' %}" method="POST" style="margin: 10px 10px 0px 10px ;">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="search">Scrape Products from Ebay </label>
+          <input type="text" class="form-control" id="search" aria-describedby="emailHelp" placeholder="Search..." name="search">
+          <small id="emailHelp" class="form-text text-muted">Search any keyword or type complete URL including http or https.</small>
+        </div>
+        <button type="submit" class="btn btn-primary mb-4">Submit</button>
+      </form>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+        {% for d in detail %}
+              <tr>
+                <td class="font">Title</td>
+                <td>{{d.product.title}}</td>
+              </tr>
+              <tr>
+                <td class="font">Price</td>
+                <td>{{d.product.price}}</td>
+              </tr>
+              <tr>
+                <td class="font">Shipping Fee</td>
+                <td>{{d.product.shipfee}}</td>
+              </tr>
+              <tr>
+                <td class="font">Seller Name</td>
+                <td>{{d.sellername}}</td>
+              </tr>
+              <tr>
+                <td class="font">Item Location</td>
+                <td>{{d.itemlocation}}</td>
+              </tr>
+              <tr>
+                <td class="font">Feedback</td>
+                <td>{{d.feedback}}</td>
+              </tr>
+              <tr>
+                <td class="font">Product Link (Sliced)</td>
+                <td><a href={{d.product.link}} target="_blank">{{d.product.link|slice:':50'}}</a></td>
+              </tr>
+              <tr>
+                <td class="font">Seller Profile</td>
+                <td><a href={{d.sellerlink}} target="_blank">{{d.sellerlink}}</a></td>
+              </tr>
+        {% endfor %}
+
+            </tbody>
+          </table>
+    </body>
+    </html>

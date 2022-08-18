@@ -1,0 +1,66 @@
+    
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+    
+        <title>Web Scraping</title>
+    </head>
+    <body>
+
+        <div class="container text-center mt-2">
+            <h2>Ebay Products Scrapping</h2>
+        </div>
+      <form action="" method="POST" style="margin: 10px 10px 0px 10px ;">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="search">Scrape Products from Ebay </label>
+          <input type="text" class="form-control" id="search" aria-describedby="emailHelp" placeholder="Search..." name="search">
+          <small id="emailHelp" class="form-text text-muted">Search any keyword or type complete URL including http or https.</small>
+        </div>
+        <button type="submit" class="btn btn-primary mb-4">Submit</button>
+      </form>
+
+
+        <h4 class="ms-3" style="color:red ;">Click on any Products Title to get more information.</h4> 
+        <h5 class="ms-3">Scraping first 20 Products</h5> 
+        <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Price</th>
+                <th scope="col">Shipping</th>
+                <!-- <th scope="col">Item Location</th>
+                <th scope="col">Seller Name</th>
+                <th scope="col">Feedback</th> -->
+                <!-- <th scope="col">Seller Links</th> -->
+                <th scope="col">Product Links</th>
+              </tr>
+            </thead>
+            <tbody>
+        {% for link in product %}
+
+              <tr>
+                <td>{{link.id}}</td>
+                <td><a href="{% url 'scrape:detail' link.id %}">{{link.title}}</a></td>
+                <td>{{link.price}}</td>
+                <td>{{link.shipfee}}</td>
+                <!-- <td>{{link.itemlocation}}</td>
+                <td>{{link.sellername}}</td>
+                <td>{{link.feedback}}</td> -->
+                <!-- <td><a href={{link.sellerlink}} target="_blank">{{link.sellerlink}}</a></td> -->
+                <td><a href={{link.link}} target="_blank">{{link.link|slice:':50'}}</a></td>
+
+              </tr>
+        {% endfor %}
+
+            </tbody>
+          </table>
+    </body>
+    </html>
